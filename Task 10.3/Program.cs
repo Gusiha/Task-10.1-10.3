@@ -1,11 +1,15 @@
 ﻿using Task_10._3;
+using static Task_10._3.BubbleSortClass;
+using static Task_10._3.QuickSortClass;
+
+
 
 NumberArray numberArray = new(10);
-
+NumberArray numberArray1 = new(10);
 // Добавление в делегат функции BubbleSort
 SortDelegate delegates = BubbleSort;
 
-#region Демонстрация функционала
+#region Демонстрация функционала (Bubble Sort + копирование)
 
 // Копирование массива
 int[] newArr = numberArray.Copy();
@@ -36,23 +40,43 @@ for (int i = 0; i < newArr.Length; i++)
 }
 #endregion
 
-// Сортировка пузырьком, которая идентична сигнатуре делегата - 1ое задание
-void BubbleSort(NumberArray numbers)
-{
-    for (int i = 0, temp = 0; i < numbers.Amount - 1; i++)
-    {
-        for (int j = 0; j < numbers.Amount - i - 1; j++)
-        {
-            if (numbers[j] > numbers[j + 1])
-            {
-                temp = numbers[j + 1];
-                numbers[j + 1] = numbers[j];
-                numbers[j] = temp;
-            }
-        }
+// Очищаем делегат от BubbleSort
+delegates -= BubbleSort;
 
-    }
+
+#region Демонстрация функционала (Quick Sort c копированием)
+
+delegates += QuickSort;
+
+Console.WriteLine();
+Console.Write("Изначальный массив: ");
+for (int i = 0; i < numberArray1.Amount; i++)
+{
+    Console.Write($"{numberArray1[i]} ");
 }
+Console.WriteLine();
+
+// Сортировка через делегат 
+numberArray1.Sort(delegates);
+
+Console.Write("Отсортированный массив: ");
+
+// Вывод после сортировки
+for (int i = 0; i < numberArray1.Amount; i++)
+{
+    Console.Write($"{numberArray1[i]} ");
+}
+Console.WriteLine();
+#endregion
+
+
+
+
+
+
+
+
+
 
 
 

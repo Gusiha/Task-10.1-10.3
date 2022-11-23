@@ -1,4 +1,5 @@
-﻿using Task_10._3;
+using System.Diagnostics;
+using Task_10._3;
 using static Task_10._3.BubbleSortClass;
 using static Task_10._3.QuickSortClass;
 
@@ -67,17 +68,28 @@ for (int i = 0; i < numberArray1.Amount; i++)
     Console.Write($"{numberArray1[i]} ");
 }
 Console.WriteLine();
+delegates -= QuickSort;
 #endregion
 
 
 
 
+#region Несколько экземпляров делегатов
+Console.WriteLine("Choose sorting variant: \n1. QuickSort;\n2. Bubble Sort.");
+string choice = Console.ReadLine();
+if (choice == "1")
+    delegates += QuickSort;
+else
+    delegates += BubbleSort;
 
+NumberArray numArr = new(30000);
 
-
-
-
-
-
-
-
+Stopwatch timer = new();
+timer.Start();
+numArr.Sort(delegates);
+timer.Stop();
+TimeSpan huh = timer.Elapsed;
+Console.WriteLine(String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            huh.Hours, huh.Minutes, huh.Seconds,
+            huh.Milliseconds / 10));
+#endregion
